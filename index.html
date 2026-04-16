@@ -435,7 +435,7 @@
         <span class="badge-opt">設置いただける場合のみ</span>
       </div>
       <div class="flyer-row">
-        <input type="number" id="flyer_count" min="1" max="999" placeholder="0" />
+        <input type="text" inputmode="numeric" id="flyer_count" placeholder="0" oninput="this.value=this.value.replace(/[０-９]/g,s=>String.fromCharCode(s.charCodeAt(0)-0xFEE0)).replace(/[^0-9]/g,'')" />
         <span class="flyer-unit">部</span>
       </div>
       <p class="hint">チラシを設置していただける場合のみ、必要な部数をご記入ください。</p>
