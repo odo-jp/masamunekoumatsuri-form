@@ -554,7 +554,8 @@
     const shopName  = document.getElementById('shop_name').value.trim();
     const comment   = document.getElementById('comment').value.trim();
     const carCount  = document.getElementById('car_count').value;
-    const flyer     = document.getElementById('flyer_count').value.trim().replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0));
+    const flyerRaw  = document.getElementById('flyer_count').value;
+    const flyer     = flyerRaw.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0)).replace(/[^0-9]/g, '').trim();
 
     if (!shopName)       { showErr('お店の名前を入力してください。'); return; }
     if (!comment)        { showErr('お店からのコメントを入力してください。'); return; }
