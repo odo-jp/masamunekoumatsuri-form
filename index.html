@@ -162,6 +162,30 @@
   input::placeholder, textarea::placeholder { color: #b8a888; }
   textarea { resize: vertical; line-height: 1.7; min-height: 100px; }
 
+  /* Select */
+  select {
+    width: 100%;
+    padding: 11px 14px;
+    font-size: 15px;
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a7a60' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    cursor: pointer;
+  }
+  select:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(200,146,42,0.12);
+  }
+
   /* Lineup */
   .lineup-list { display: flex; flex-direction: column; gap: 6px; }
   .lineup-row { display: flex; align-items: center; gap: 8px; }
@@ -387,10 +411,26 @@
       <p class="hint" id="img_hint"></p>
     </div>
 
-    <!-- ⑤ チラシ -->
+    <!-- ④ 車の台数 -->
     <div class="section">
       <div class="section-label">
         <div class="section-num">四</div>
+        <span class="section-title">駐車場ご利用台数</span>
+        <span class="badge-req">必須</span>
+      </div>
+      <select id="car_count">
+        <option value="" disabled selected>選択してください</option>
+        <option value="0台">0台（利用しない）</option>
+        <option value="1台">1台</option>
+        <option value="2台以上（要相談）">2台以上（要相談）</option>
+      </select>
+      <p class="hint">各店舗1台までとなります。2台以上ご希望の場合は運営にご相談ください。</p>
+    </div>
+
+    <!-- ⑤ チラシ -->
+    <div class="section">
+      <div class="section-label">
+        <div class="section-num">五</div>
         <span class="section-title">チラシの必要部数</span>
         <span class="badge-opt">設置いただける場合のみ</span>
       </div>
@@ -511,13 +551,15 @@
   // ----- 送信 -----
   async function submitForm() {
     clearErr();
-    const shopName = document.getElementById('shop_name').value.trim();
-    const comment  = document.getElementById('comment').value.trim();
-    const flyer    = document.getElementById('flyer_count').value.trim();
+    const shopName  = document.getElementById('shop_name').value.trim();
+    const comment   = document.getElementById('comment').value.trim();
+    const carCount  = document.getElementById('car_count').value;
+    const flyer     = document.getElementById('flyer_count').value.trim();
 
     if (!shopName)       { showErr('お店の名前を入力してください。'); return; }
     if (!comment)        { showErr('お店からのコメントを入力してください。'); return; }
     if (!imgFiles.length){ showErr('画像をアップロードしてください。'); return; }
+    if (!carCount)       { showErr('駐車場ご利用台数を選択してください。'); return; }
 
     const btn = document.getElementById('btn_submit');
     const sending = document.getElementById('sending_indicator');
@@ -537,6 +579,7 @@
       const payload = {
         shop_name:   shopName,
         comment:     comment,
+        car_count:   carCount,
         flyer_count: flyer || '不要',
         img_count:   images.length,
         images:      images,
