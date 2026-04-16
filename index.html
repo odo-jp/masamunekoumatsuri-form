@@ -340,7 +340,7 @@
 
   <p class="intro">
     当日の掲載情報収集にご協力をお願いいたします。<br>
-    お店の名前・コメント・ラインナップ・画像（1〜2枚）、<br>
+    お店の名前・コメント・画像（1枚）、<br>
     チラシが必要な場合は部数をご記入の上、送信ください。
   </p>
 
@@ -363,36 +363,14 @@
         <span class="section-title">お店からのコメント</span>
         <span class="badge-req">必須</span>
       </div>
-      <textarea id="comment" placeholder="当日のアピールポイント、来場者へのメッセージなどをご自由にどうぞ"></textarea>
-    </div>
-
-    <!-- ③ ラインナップ -->
-    <div class="section">
-      <div class="section-label">
-        <div class="section-num">三</div>
-        <span class="section-title">当日のラインナップ</span>
-        <span class="badge-req">必須</span>
-      </div>
-      <div class="lineup-list" id="lineup_list">
-        <div class="lineup-row">
-          <input type="text" placeholder="商品・メニュー名" />
-          <button class="btn-del" type="button" onclick="delRow(this)">×</button>
-        </div>
-      </div>
-      <button class="btn-add" type="button" onclick="addRow()">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <circle cx="7" cy="7" r="6.5" stroke="currentColor"/>
-          <path d="M7 4v6M4 7h6" stroke="currentColor" stroke-width="1.2"/>
-        </svg>
-        商品・メニューを追加
-      </button>
+      <textarea id="comment" placeholder="お店の紹介や、来場者へのメッセージなど"></textarea>
     </div>
 
     <!-- ④ 画像 -->
     <div class="section">
       <div class="section-label">
-        <div class="section-num">四</div>
-        <span class="section-title">画像（1〜2枚）</span>
+        <div class="section-num">三</div>
+        <span class="section-title">画像（1枚）</span>
         <span class="badge-req">必須</span>
       </div>
       <div class="upload-zone" id="upload_zone"
@@ -401,8 +379,9 @@
         ondrop="handleDrop(event)">
         <div class="upload-icon">🖼</div>
         <p>タップして画像を選択</p>
-        <small>JPG / PNG　最大2枚</small>
-        <input type="file" id="img_input" accept="image/jpeg,image/png,image/webp" multiple onchange="handleFiles(this.files)" />
+        <small>お店の雰囲気が伝わるイメージ画像をお送りください（ロゴのみは不可）</small><br>
+        <small style="color: var(--ink-light);">できるだけ1：1の画角でお願いします　JPG / PNG</small>
+        <input type="file" id="img_input" accept="image/jpeg,image/png,image/webp" onchange="handleFiles(this.files)" />
       </div>
       <div class="preview-grid" id="preview_grid"></div>
       <p class="hint" id="img_hint"></p>
@@ -411,7 +390,7 @@
     <!-- ⑤ チラシ -->
     <div class="section">
       <div class="section-label">
-        <div class="section-num">五</div>
+        <div class="section-num">四</div>
         <span class="section-title">チラシの必要部数</span>
         <span class="badge-opt">設置いただける場合のみ</span>
       </div>
@@ -450,7 +429,7 @@
   // ★ Google Apps Script の WebApp URL をここに貼る ★
   // デプロイ後に発行される URL に差し替えてください
   // ====================================================
-  const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyRFUOWCQHoLf_uafCXGVbO3TaufGoZfCYQPEwXx4V9vlac59VU6WThi6tA3_9ksGVY/exec';
+  const GAS_ENDPOINT = 'YOUR_GAS_WEB_APP_URL_HERE';
 
   // ----- ラインナップ -----
   function addRow() {
@@ -475,8 +454,7 @@
   let imgFiles = [];
   function handleFiles(files) {
     const f = Array.from(files);
-    const remain = 2 - imgFiles.length;
-    imgFiles = [...imgFiles, ...f.slice(0, remain)];
+    imgFiles = [f[0]];
     renderPreviews();
     document.getElementById('img_input').value = '';
   }
@@ -500,12 +478,12 @@
       card.innerHTML = `<img src="${url}" alt="${f.name}"><div class="p-name">${f.name}</div><button class="p-del" type="button" onclick="removeImg(${i})">×</button>`;
       grid.appendChild(card);
     });
-    if (imgFiles.length >= 2) {
+    if (imgFiles.length >= 1) {
       zone.style.display = 'none';
-      hint.textContent = '2枚選択済み（上限です）';
+      hint.textContent = '1枚選択済み';
     } else {
       zone.style.display = '';
-      hint.textContent = imgFiles.length === 1 ? 'あと1枚追加できます' : '';
+      hint.textContent = '';
     }
   }
 
@@ -535,13 +513,11 @@
     clearErr();
     const shopName = document.getElementById('shop_name').value.trim();
     const comment  = document.getElementById('comment').value.trim();
-    const lineup   = getLineup();
     const flyer    = document.getElementById('flyer_count').value.trim();
 
     if (!shopName)       { showErr('お店の名前を入力してください。'); return; }
     if (!comment)        { showErr('お店からのコメントを入力してください。'); return; }
-    if (!lineup.length)  { showErr('ラインナップを1つ以上入力してください。'); return; }
-    if (!imgFiles.length){ showErr('画像を1枚以上アップロードしてください。'); return; }
+    if (!imgFiles.length){ showErr('画像をアップロードしてください。'); return; }
 
     const btn = document.getElementById('btn_submit');
     const sending = document.getElementById('sending_indicator');
@@ -561,7 +537,6 @@
       const payload = {
         shop_name:   shopName,
         comment:     comment,
-        lineup:      lineup.join('\n'),
         flyer_count: flyer || '不要',
         img_count:   images.length,
         images:      images,
