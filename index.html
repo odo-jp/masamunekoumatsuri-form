@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>縁日政宗公まつり｜出店者情報フォーム</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1208;
+    --ink-mid: #4a3c28;
+    --ink-light: #8a7a60;
+    --paper: #fdf8f0;
+    --paper-dark: #f0e8d8;
+    --gold: #c8922a;
+    --gold-light: #e8c46a;
+    --red: #8b2020;
+    --border: rgba(90,60,20,0.18);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* Hero header */
+  .hero {
+    background: var(--ink);
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg, transparent, transparent 30px,
+      rgba(200,146,42,0.04) 30px, rgba(200,146,42,0.04) 31px
+    );
+  }
+  .hero-mon {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 42px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+  .hero-sub {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--gold-light);
+    opacity: 0.7;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(16px, 4vw, 22px);
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.12em;
+    line-height: 1.6;
+    position: relative;
+  }
+  .hero-rule {
+    width: 60px; height: 1px;
+    background: var(--gold);
+    margin: 1rem auto 0;
+    position: relative;
+  }
+
+  /* Main layout */
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .intro {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.9;
+    padding: 1.25rem 1.5rem;
+    background: var(--paper-dark);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 2.5rem;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 2rem;
+  }
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .section-num {
+    width: 24px; height: 24px;
+    background: var(--ink);
+    color: var(--gold);
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-family: 'Noto Serif JP', serif;
+  }
+  .section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+  }
+  .badge-req {
+    font-size: 10px;
+    background: var(--red);
+    color: #fff;
+    padding: 2px 7px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+  }
+  .badge-opt {
+    font-size: 10px;
+    color: var(--ink-light);
+    border: 0.5px solid var(--border);
+    padding: 2px 7px;
+    border-radius: 3px;
+  }
+
+  /* Inputs */
+  input[type="text"], input[type="number"], textarea {
+    width: 100%;
+    padding: 11px 14px;
+    font-size: 15px;
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+  }
+  input[type="text"]:focus, input[type="number"]:focus, textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(200,146,42,0.12);
+  }
+  input::placeholder, textarea::placeholder { color: #b8a888; }
+  textarea { resize: vertical; line-height: 1.7; min-height: 100px; }
+
+  /* Lineup */
+  .lineup-list { display: flex; flex-direction: column; gap: 6px; }
+  .lineup-row { display: flex; align-items: center; gap: 8px; }
+  .lineup-row input { flex: 1; }
+  .btn-del {
+    width: 32px; height: 32px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--ink-light);
+    cursor: pointer;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-del:hover { border-color: var(--red); color: var(--red); }
+  .btn-add {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 8px;
+    background: none; border: 1px dashed var(--gold);
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-size: 13px;
+    color: var(--gold);
+    cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+    transition: background 0.2s;
+  }
+  .btn-add:hover { background: rgba(200,146,42,0.07); }
+
+  /* Upload */
+  .upload-zone {
+    border: 1.5px dashed var(--border);
+    border-radius: 8px;
+    padding: 1.75rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    background: #fff;
+  }
+  .upload-zone:hover, .upload-zone.drag { border-color: var(--gold); background: rgba(200,146,42,0.04); }
+  .upload-zone input { display: none; }
+  .upload-icon { font-size: 28px; margin-bottom: 8px; }
+  .upload-zone p { font-size: 13px; color: var(--ink-mid); }
+  .upload-zone small { font-size: 11px; color: var(--ink-light); }
+
+  .preview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .preview-card {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .preview-card img { width: 100%; height: 130px; object-fit: cover; display: block; }
+  .preview-card .p-name {
+    padding: 5px 8px;
+    font-size: 11px;
+    color: var(--ink-mid);
+    background: var(--paper-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .preview-card .p-del {
+    position: absolute; top: 6px; right: 6px;
+    width: 22px; height: 22px;
+    background: rgba(26,18,8,0.65);
+    color: #fff; border: none; border-radius: 50%;
+    font-size: 13px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+  }
+
+  /* Flyer */
+  .flyer-row { display: flex; align-items: center; gap: 10px; }
+  .flyer-row input[type="number"] { width: 100px; }
+  .flyer-unit { font-size: 14px; color: var(--ink-mid); }
+  .hint { font-size: 12px; color: var(--ink-light); margin-top: 6px; line-height: 1.6; }
+
+  /* Error */
+  .err-msg {
+    display: none;
+    background: #fdf0f0;
+    border: 1px solid #e0aaaa;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--red);
+    margin-top: 12px;
+  }
+
+  /* Submit */
+  .submit-wrap { margin-top: 2.5rem; }
+  .btn-submit {
+    width: 100%;
+    padding: 16px;
+    background: var(--ink);
+    color: var(--gold);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-submit::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(200,146,42,0.12);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .btn-submit:hover::after { opacity: 1; }
+  .btn-submit:active { transform: scale(0.99); }
+  .btn-submit:disabled { opacity: 0.45; cursor: default; }
+
+  /* Success */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 3rem 1.5rem;
+  }
+  .success-mon {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 48px;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .success-screen h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 20px;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+  }
+  .success-screen p {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.8;
+  }
+
+  /* Sending overlay */
+  .sending { display: none; }
+  .sending.active { display: block; text-align: center; padding: 1.5rem; color: var(--ink-mid); font-size: 14px; }
+  .spinner {
+    display: inline-block;
+    width: 24px; height: 24px;
+    border: 2px solid var(--border);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 8px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Google Apps Script送信先URL — ここを差し替える */
+  /* GAS_ENDPOINT は下の script 内で設定 */
+
+  @media (max-width: 400px) {
+    .preview-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>縁日政宗公まつり<br>出店者情報フォーム</h1>
+  <div class="hero-rule"></div>
+</div>
+
+<div class="container">
+
+  <p class="intro">
+    当日の掲載情報収集にご協力をお願いいたします。<br>
+    お店の名前・コメント・ラインナップ・画像（1〜2枚）、<br>
+    チラシが必要な場合は部数をご記入の上、送信ください。
+  </p>
+
+  <div id="form-body">
+
+    <!-- ① お店の名前 -->
+    <div class="section">
+      <div class="section-label">
+        <div class="section-num">一</div>
+        <span class="section-title">お店の名前</span>
+        <span class="badge-req">必須</span>
+      </div>
+      <input type="text" id="shop_name" placeholder="例：伊達な唐揚げ屋" autocomplete="off" />
+    </div>
+
+    <!-- ② コメント -->
+    <div class="section">
+      <div class="section-label">
+        <div class="section-num">二</div>
+        <span class="section-title">お店からのコメント</span>
+        <span class="badge-req">必須</span>
+      </div>
+      <textarea id="comment" placeholder="当日のアピールポイント、来場者へのメッセージなどをご自由にどうぞ"></textarea>
+    </div>
+
+    <!-- ③ ラインナップ -->
+    <div class="section">
+      <div class="section-label">
+        <div class="section-num">三</div>
+        <span class="section-title">当日のラインナップ</span>
+        <span class="badge-req">必須</span>
+      </div>
+      <div class="lineup-list" id="lineup_list">
+        <div class="lineup-row">
+          <input type="text" placeholder="商品・メニュー名" />
+          <button class="btn-del" type="button" onclick="delRow(this)">×</button>
+        </div>
+      </div>
+      <button class="btn-add" type="button" onclick="addRow()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <circle cx="7" cy="7" r="6.5" stroke="currentColor"/>
+          <path d="M7 4v6M4 7h6" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+        商品・メニューを追加
+      </button>
+    </div>
+
+    <!-- ④ 画像 -->
+    <div class="section">
+      <div class="section-label">
+        <div class="section-num">四</div>
+        <span class="section-title">画像（1〜2枚）</span>
+        <span class="badge-req">必須</span>
+      </div>
+      <div class="upload-zone" id="upload_zone"
+        onclick="document.getElementById('img_input').click()"
+        ondragover="e=>e.preventDefault()"
+        ondrop="handleDrop(event)">
+        <div class="upload-icon">🖼</div>
+        <p>タップして画像を選択</p>
+        <small>JPG / PNG　最大2枚</small>
+        <input type="file" id="img_input" accept="image/jpeg,image/png,image/webp" multiple onchange="handleFiles(this.files)" />
+      </div>
+      <div class="preview-grid" id="preview_grid"></div>
+      <p class="hint" id="img_hint"></p>
+    </div>
+
+    <!-- ⑤ チラシ -->
+    <div class="section">
+      <div class="section-label">
+        <div class="section-num">五</div>
+        <span class="section-title">チラシの必要部数</span>
+        <span class="badge-opt">設置いただける場合のみ</span>
+      </div>
+      <div class="flyer-row">
+        <input type="number" id="flyer_count" min="1" max="999" placeholder="0" />
+        <span class="flyer-unit">部</span>
+      </div>
+      <p class="hint">チラシを設置していただける場合のみ、必要な部数をご記入ください。</p>
+    </div>
+
+    <div class="err-msg" id="err_msg"></div>
+
+    <div class="submit-wrap">
+      <button class="btn-submit" id="btn_submit" type="button" onclick="submitForm()">
+        送　信
+      </button>
+    </div>
+
+    <div class="sending" id="sending_indicator">
+      <div class="spinner"></div>
+      <p>送信中です。しばらくお待ちください…</p>
+    </div>
+
+  </div><!-- /form-body -->
+
+  <div class="success-screen" id="success_screen">
+    <div class="success-mon">✦</div>
+    <h2>送信が完了しました</h2>
+    <p>ご協力いただきありがとうございます。<br>内容を確認の上、担当者よりご連絡いたします。</p>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+  // ====================================================
+  // ★ Google Apps Script の WebApp URL をここに貼る ★
+  // デプロイ後に発行される URL に差し替えてください
+  // ====================================================
+  const GAS_ENDPOINT = 'YOUR_GAS_WEB_APP_URL_HERE';
+
+  // ----- ラインナップ -----
+  function addRow() {
+    const list = document.getElementById('lineup_list');
+    const row = document.createElement('div');
+    row.className = 'lineup-row';
+    row.innerHTML = '<input type="text" placeholder="商品・メニュー名"><button class="btn-del" type="button" onclick="delRow(this)">×</button>';
+    list.appendChild(row);
+    row.querySelector('input').focus();
+  }
+  function delRow(btn) {
+    const list = document.getElementById('lineup_list');
+    if (list.children.length <= 1) { btn.previousElementSibling.value = ''; return; }
+    btn.parentElement.remove();
+  }
+  function getLineup() {
+    return Array.from(document.querySelectorAll('#lineup_list input'))
+      .map(i => i.value.trim()).filter(Boolean);
+  }
+
+  // ----- 画像 -----
+  let imgFiles = [];
+  function handleFiles(files) {
+    const f = Array.from(files);
+    const remain = 2 - imgFiles.length;
+    imgFiles = [...imgFiles, ...f.slice(0, remain)];
+    renderPreviews();
+    document.getElementById('img_input').value = '';
+  }
+  function handleDrop(e) {
+    e.preventDefault();
+    handleFiles(e.dataTransfer.files);
+  }
+  function removeImg(i) {
+    imgFiles.splice(i, 1);
+    renderPreviews();
+  }
+  function renderPreviews() {
+    const grid = document.getElementById('preview_grid');
+    const hint = document.getElementById('img_hint');
+    const zone = document.getElementById('upload_zone');
+    grid.innerHTML = '';
+    imgFiles.forEach((f, i) => {
+      const url = URL.createObjectURL(f);
+      const card = document.createElement('div');
+      card.className = 'preview-card';
+      card.innerHTML = `<img src="${url}" alt="${f.name}"><div class="p-name">${f.name}</div><button class="p-del" type="button" onclick="removeImg(${i})">×</button>`;
+      grid.appendChild(card);
+    });
+    if (imgFiles.length >= 2) {
+      zone.style.display = 'none';
+      hint.textContent = '2枚選択済み（上限です）';
+    } else {
+      zone.style.display = '';
+      hint.textContent = imgFiles.length === 1 ? 'あと1枚追加できます' : '';
+    }
+  }
+
+  // ----- Base64変換 -----
+  function toBase64(file) {
+    return new Promise((res, rej) => {
+      const r = new FileReader();
+      r.onload = () => res(r.result.split(',')[1]);
+      r.onerror = rej;
+      r.readAsDataURL(file);
+    });
+  }
+
+  // ----- バリデーション -----
+  function showErr(msg) {
+    const el = document.getElementById('err_msg');
+    el.textContent = msg;
+    el.style.display = 'block';
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  function clearErr() {
+    document.getElementById('err_msg').style.display = 'none';
+  }
+
+  // ----- 送信 -----
+  async function submitForm() {
+    clearErr();
+    const shopName = document.getElementById('shop_name').value.trim();
+    const comment  = document.getElementById('comment').value.trim();
+    const lineup   = getLineup();
+    const flyer    = document.getElementById('flyer_count').value.trim();
+
+    if (!shopName)       { showErr('お店の名前を入力してください。'); return; }
+    if (!comment)        { showErr('お店からのコメントを入力してください。'); return; }
+    if (!lineup.length)  { showErr('ラインナップを1つ以上入力してください。'); return; }
+    if (!imgFiles.length){ showErr('画像を1枚以上アップロードしてください。'); return; }
+
+    const btn = document.getElementById('btn_submit');
+    const sending = document.getElementById('sending_indicator');
+    btn.disabled = true;
+    sending.classList.add('active');
+
+    try {
+      const images = [];
+      for (const f of imgFiles) {
+        images.push({
+          name: f.name,
+          type: f.type,
+          data: await toBase64(f)
+        });
+      }
+
+      const payload = {
+        shop_name:   shopName,
+        comment:     comment,
+        lineup:      lineup.join('\n'),
+        flyer_count: flyer || '不要',
+        img_count:   images.length,
+        images:      images,
+        submitted_at: new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })
+      };
+
+      if (GAS_ENDPOINT === 'YOUR_GAS_WEB_APP_URL_HERE') {
+        // まだURLが設定されていない場合はコンソールに出力してデモ動作
+        console.log('【送信データ（デモ）】', payload);
+        await new Promise(r => setTimeout(r, 800));
+      } else {
+        await fetch(GAS_ENDPOINT, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      }
+
+      document.getElementById('form-body').style.display = 'none';
+      document.getElementById('success_screen').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    } catch (err) {
+      sending.classList.remove('active');
+      btn.disabled = false;
+      showErr('送信中にエラーが発生しました。通信状態をご確認の上、再度お試しください。');
+      console.error(err);
+    }
+  }
+</script>
+</body>
+</html>
