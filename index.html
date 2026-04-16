@@ -543,7 +543,7 @@
         submitted_at: new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })
       };
 
-      if (GAS_ENDPOINT === 'YOUR_GAS_WEB_APP_URL_HERE') {
+      if (GAS_ENDPOINT === 'https://script.google.com/macros/s/AKfycbwwU684AfzYUOkCdyGh7zfAbXjCffb9XU1NY5XFeXj958kWSEuqGFTBPog2bOO5o0kU/exec') {
         // まだURLが設定されていない場合はコンソールに出力してデモ動作
         console.log('【送信データ（デモ）】', payload);
         await new Promise(r => setTimeout(r, 800));
