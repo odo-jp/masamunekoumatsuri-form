@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>縁日政宗公まつり｜出店者情報フォーム</title>
+<title>縁日政宗公まつり｜奉納演舞者情報フォーム</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,7 +29,6 @@
     min-height: 100vh;
   }
 
-  /* Hero header */
   .hero {
     background: var(--ink);
     padding: 2.5rem 1.5rem 2rem;
@@ -44,22 +43,6 @@
       45deg, transparent, transparent 30px,
       rgba(200,146,42,0.04) 30px, rgba(200,146,42,0.04) 31px
     );
-  }
-  .hero-mon {
-    font-family: 'Noto Serif JP', serif;
-    font-size: 42px;
-    color: var(--gold);
-    line-height: 1;
-    margin-bottom: 0.5rem;
-    position: relative;
-  }
-  .hero-sub {
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    color: var(--gold-light);
-    opacity: 0.7;
-    margin-bottom: 1rem;
-    position: relative;
   }
   .hero h1 {
     font-family: 'Noto Serif JP', serif;
@@ -77,7 +60,6 @@
     position: relative;
   }
 
-  /* Main layout */
   .container {
     max-width: 640px;
     margin: 0 auto;
@@ -95,10 +77,7 @@
     margin-bottom: 2.5rem;
   }
 
-  /* Section */
-  .section {
-    margin-bottom: 2rem;
-  }
+  .section { margin-bottom: 2rem; }
   .section-label {
     display: flex;
     align-items: center;
@@ -141,7 +120,6 @@
     border-radius: 3px;
   }
 
-  /* Inputs */
   input[type="text"], input[type="number"], textarea {
     width: 100%;
     padding: 11px 14px;
@@ -162,7 +140,6 @@
   input::placeholder, textarea::placeholder { color: #b8a888; }
   textarea { resize: vertical; line-height: 1.7; min-height: 100px; }
 
-  /* Select */
   select {
     width: 100%;
     padding: 11px 14px;
@@ -186,37 +163,6 @@
     box-shadow: 0 0 0 3px rgba(200,146,42,0.12);
   }
 
-  /* Lineup */
-  .lineup-list { display: flex; flex-direction: column; gap: 6px; }
-  .lineup-row { display: flex; align-items: center; gap: 8px; }
-  .lineup-row input { flex: 1; }
-  .btn-del {
-    width: 32px; height: 32px;
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--ink-light);
-    cursor: pointer;
-    font-size: 16px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .btn-del:hover { border-color: var(--red); color: var(--red); }
-  .btn-add {
-    display: inline-flex; align-items: center; gap: 6px;
-    margin-top: 8px;
-    background: none; border: 1px dashed var(--gold);
-    border-radius: 6px;
-    padding: 7px 14px;
-    font-size: 13px;
-    color: var(--gold);
-    cursor: pointer;
-    font-family: 'Noto Sans JP', sans-serif;
-    transition: background 0.2s;
-  }
-  .btn-add:hover { background: rgba(200,146,42,0.07); }
-
   /* Upload */
   .upload-zone {
     border: 1.5px dashed var(--border);
@@ -227,7 +173,7 @@
     transition: border-color 0.2s, background 0.2s;
     background: #fff;
   }
-  .upload-zone:hover, .upload-zone.drag { border-color: var(--gold); background: rgba(200,146,42,0.04); }
+  .upload-zone:hover { border-color: var(--gold); background: rgba(200,146,42,0.04); }
   .upload-zone input { display: none; }
   .upload-icon { font-size: 28px; margin-bottom: 8px; }
   .upload-zone p { font-size: 13px; color: var(--ink-mid); }
@@ -262,9 +208,32 @@
 
   /* Flyer */
   .flyer-row { display: flex; align-items: center; gap: 10px; }
-  .flyer-row input[type="number"] { width: 100px; }
   .flyer-unit { font-size: 14px; color: var(--ink-mid); }
   .hint { font-size: 12px; color: var(--ink-light); margin-top: 6px; line-height: 1.6; }
+
+  /* チラシ受取方法 */
+  .flyer-method { margin-top: 12px; display: none; }
+  .flyer-method.visible { display: block; }
+  .radio-group { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+  .radio-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 14px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .radio-item:has(input:checked) { border-color: var(--gold); background: rgba(200,146,42,0.04); }
+  .radio-item input[type="radio"] {
+    width: auto;
+    margin-top: 2px;
+    accent-color: var(--gold);
+    flex-shrink: 0;
+  }
+  .radio-label { font-size: 14px; color: var(--ink); line-height: 1.5; }
+  .address-input { margin-top: 8px; display: none; }
+  .address-input.visible { display: block; }
 
   /* Error */
   .err-msg {
@@ -292,61 +261,24 @@
     font-weight: 600;
     letter-spacing: 0.15em;
     cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-    position: relative;
-    overflow: hidden;
+    transition: background 0.2s;
   }
-  .btn-submit::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: rgba(200,146,42,0.12);
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-  .btn-submit:hover::after { opacity: 1; }
-  .btn-submit:active { transform: scale(0.99); }
   .btn-submit:disabled { opacity: 0.45; cursor: default; }
 
   /* Success */
-  .success-screen {
-    display: none;
-    text-align: center;
-    padding: 3rem 1.5rem;
-  }
-  .success-mon {
-    font-family: 'Noto Serif JP', serif;
-    font-size: 48px;
-    color: var(--gold);
-    margin-bottom: 1rem;
-  }
-  .success-screen h2 {
-    font-family: 'Noto Serif JP', serif;
-    font-size: 20px;
-    color: var(--ink);
-    margin-bottom: 0.75rem;
-  }
-  .success-screen p {
-    font-size: 13px;
-    color: var(--ink-mid);
-    line-height: 1.8;
-  }
+  .success-screen { display: none; text-align: center; padding: 3rem 1.5rem; }
+  .success-mon { font-family: 'Noto Serif JP', serif; font-size: 48px; color: var(--gold); margin-bottom: 1rem; }
+  .success-screen h2 { font-family: 'Noto Serif JP', serif; font-size: 20px; color: var(--ink); margin-bottom: 0.75rem; }
+  .success-screen p { font-size: 13px; color: var(--ink-mid); line-height: 1.8; }
 
-  /* Sending overlay */
   .sending { display: none; }
   .sending.active { display: block; text-align: center; padding: 1.5rem; color: var(--ink-mid); font-size: 14px; }
   .spinner {
-    display: inline-block;
-    width: 24px; height: 24px;
-    border: 2px solid var(--border);
-    border-top-color: var(--gold);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin-bottom: 8px;
+    display: inline-block; width: 24px; height: 24px;
+    border: 2px solid var(--border); border-top-color: var(--gold);
+    border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 8px;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* Google Apps Script送信先URL — ここを差し替える */
-  /* GAS_ENDPOINT は下の script 内で設定 */
 
   @media (max-width: 400px) {
     .preview-grid { grid-template-columns: 1fr; }
@@ -356,62 +288,61 @@
 <body>
 
 <div class="hero">
-  <h1>縁日政宗公まつり<br>出店者情報フォーム</h1>
+  <h1>縁日政宗公まつり<br>奉納演舞者情報フォーム</h1>
   <div class="hero-rule"></div>
 </div>
 
 <div class="container">
 
   <p class="intro">
-    当日の掲載情報収集にご協力をお願いいたします。<br>
-    お店の名前・コメント・画像（1枚）、<br>
-    チラシが必要な場合は部数をご記入の上、送信ください。
+    SNS等の告知掲載に向けた情報収集にご協力をお願いいたします。<br>
+    団体名・紹介文・画像（1〜2枚）をご入力の上、送信ください。
   </p>
 
   <div id="form-body">
 
-    <!-- ① お店の名前 -->
+    <!-- ① 団体名 -->
     <div class="section">
       <div class="section-label">
         <div class="section-num">一</div>
-        <span class="section-title">お店の名前</span>
+        <span class="section-title">団体名</span>
         <span class="badge-req">必須</span>
       </div>
-      <input type="text" id="shop_name" placeholder="例：伊達な唐揚げ屋" autocomplete="off" />
+      <input type="text" id="group_name" placeholder="例：伊達流舞踊会" autocomplete="off" />
     </div>
 
-    <!-- ② コメント -->
+    <!-- ② 紹介文・コメント -->
     <div class="section">
       <div class="section-label">
         <div class="section-num">二</div>
-        <span class="section-title">お店からのコメント</span>
+        <span class="section-title">紹介文・来場者へのコメント</span>
         <span class="badge-req">必須</span>
       </div>
-      <textarea id="comment" placeholder="お店の紹介や、来場者へのメッセージなど"></textarea>
+      <textarea id="comment" placeholder="団体の紹介や、来場者へのメッセージなど"></textarea>
     </div>
 
-    <!-- ④ 画像 -->
+    <!-- ③ 画像 -->
     <div class="section">
       <div class="section-label">
         <div class="section-num">三</div>
-        <span class="section-title">画像（1枚）</span>
+        <span class="section-title">画像（1〜2枚）</span>
         <span class="badge-req">必須</span>
       </div>
       <div class="upload-zone" id="upload_zone"
         onclick="document.getElementById('img_input').click()"
-        ondragover="e=>e.preventDefault()"
+        ondragover="event.preventDefault()"
         ondrop="handleDrop(event)">
         <div class="upload-icon">🖼</div>
         <p>タップして画像を選択</p>
-        <small>お店の雰囲気が伝わるイメージ画像をお送りください（ロゴのみは不可）</small><br>
-        <small style="color: var(--ink-light);">できるだけ1：1の画角でお願いします　JPG / PNG</small>
-        <input type="file" id="img_input" accept="image/jpeg,image/png,image/webp" onchange="handleFiles(this.files)" />
+        <small>演舞の雰囲気が伝わるイメージ画像をお送りください</small><br>
+        <small style="color: var(--ink-light);">できるだけ1：1の画角でお願いします　JPG / PNG　最大2枚</small>
+        <input type="file" id="img_input" accept="image/jpeg,image/png,image/webp" multiple onchange="handleFiles(this.files)" />
       </div>
       <div class="preview-grid" id="preview_grid"></div>
       <p class="hint" id="img_hint"></p>
     </div>
 
-    <!-- ④ 車の台数 -->
+    <!-- ④ 駐車場 -->
     <div class="section">
       <div class="section-label">
         <div class="section-num">四</div>
@@ -424,7 +355,7 @@
         <option value="1台">1台</option>
         <option value="2台以上（要相談）">2台以上（要相談）</option>
       </select>
-      <p class="hint">各店舗1台までとなります。2台以上ご希望の場合は運営にご相談ください。</p>
+      <p class="hint">各団体1台までとなります。2台以上ご希望の場合は運営にご相談ください。</p>
     </div>
 
     <!-- ⑤ チラシ -->
@@ -432,13 +363,36 @@
       <div class="section-label">
         <div class="section-num">五</div>
         <span class="section-title">チラシの必要部数</span>
-        <span class="badge-opt">設置いただける場合のみ</span>
+        <span class="badge-opt">必要な場合のみ</span>
       </div>
       <div class="flyer-row">
-        <input type="text" inputmode="numeric" id="flyer_count" placeholder="0" oninput="this.value=this.value.replace(/[０-９]/g,s=>String.fromCharCode(s.charCodeAt(0)-0xFEE0)).replace(/[^0-9]/g,'')" />
+        <input type="text" inputmode="numeric" id="flyer_count" placeholder="0"
+          oninput="this.value=this.value.replace(/[０-９]/g,s=>String.fromCharCode(s.charCodeAt(0)-0xFEE0)).replace(/[^0-9]/g,'');toggleFlyerMethod()" />
         <span class="flyer-unit">部</span>
       </div>
       <p class="hint">チラシを設置していただける場合のみ、必要な部数をご記入ください。</p>
+
+      <!-- 受取方法（部数入力時に表示） -->
+      <div class="flyer-method" id="flyer_method">
+        <p style="font-size:13px; color:var(--ink-mid); margin-bottom:4px;">受取方法をお選びください<span style="color:var(--red); margin-left:4px; font-size:11px;">必須</span></p>
+        <div class="radio-group">
+          <label class="radio-item">
+            <input type="radio" name="flyer_receive" value="青葉神社にて受取" onchange="toggleAddress()" />
+            <span class="radio-label">青葉神社にて受取</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="flyer_receive" value="郵送" onchange="toggleAddress()" />
+            <span class="radio-label">郵送（住所をご記入ください）</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="flyer_receive" value="画像データで受取" onchange="toggleAddress()" />
+            <span class="radio-label">画像データで受取</span>
+          </label>
+        </div>
+        <div class="address-input" id="address_input">
+          <input type="text" id="postal_address" placeholder="〒000-0000　仙台市青葉区…" style="margin-top:10px;" />
+        </div>
+      </div>
     </div>
 
     <div class="err-msg" id="err_msg"></div>
@@ -467,34 +421,15 @@
 <script>
   // ====================================================
   // ★ Google Apps Script の WebApp URL をここに貼る ★
-  // デプロイ後に発行される URL に差し替えてください
   // ====================================================
-  const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwwU684AfzYUOkCdyGh7zfAbXjCffb9XU1NY5XFeXj958kWSEuqGFTBPog2bOO5o0kU/exec';
+  const GAS_ENDPOINT = 'YOUR_GAS_WEB_APP_URL_HERE';
 
-  // ----- ラインナップ -----
-  function addRow() {
-    const list = document.getElementById('lineup_list');
-    const row = document.createElement('div');
-    row.className = 'lineup-row';
-    row.innerHTML = '<input type="text" placeholder="商品・メニュー名"><button class="btn-del" type="button" onclick="delRow(this)">×</button>';
-    list.appendChild(row);
-    row.querySelector('input').focus();
-  }
-  function delRow(btn) {
-    const list = document.getElementById('lineup_list');
-    if (list.children.length <= 1) { btn.previousElementSibling.value = ''; return; }
-    btn.parentElement.remove();
-  }
-  function getLineup() {
-    return Array.from(document.querySelectorAll('#lineup_list input'))
-      .map(i => i.value.trim()).filter(Boolean);
-  }
-
-  // ----- 画像 -----
+  // ----- 画像（最大2枚）-----
   let imgFiles = [];
   function handleFiles(files) {
     const f = Array.from(files);
-    imgFiles = [f[0]];
+    const remain = 2 - imgFiles.length;
+    imgFiles = [...imgFiles, ...f.slice(0, remain)];
     renderPreviews();
     document.getElementById('img_input').value = '';
   }
@@ -518,12 +453,38 @@
       card.innerHTML = `<img src="${url}" alt="${f.name}"><div class="p-name">${f.name}</div><button class="p-del" type="button" onclick="removeImg(${i})">×</button>`;
       grid.appendChild(card);
     });
-    if (imgFiles.length >= 1) {
+    if (imgFiles.length >= 2) {
       zone.style.display = 'none';
-      hint.textContent = '1枚選択済み';
+      hint.textContent = '2枚選択済み（上限です）';
     } else {
       zone.style.display = '';
-      hint.textContent = '';
+      hint.textContent = imgFiles.length === 1 ? 'あと1枚追加できます' : '';
+    }
+  }
+
+  // ----- チラシ部数入力で受取方法を表示 -----
+  function toggleFlyerMethod() {
+    const val = document.getElementById('flyer_count').value;
+    const method = document.getElementById('flyer_method');
+    if (val && parseInt(val) > 0) {
+      method.classList.add('visible');
+    } else {
+      method.classList.remove('visible');
+      document.querySelectorAll('input[name="flyer_receive"]').forEach(r => r.checked = false);
+      document.getElementById('address_input').classList.remove('visible');
+      document.getElementById('postal_address').value = '';
+    }
+  }
+
+  // ----- 郵送選択で住所欄を表示 -----
+  function toggleAddress() {
+    const selected = document.querySelector('input[name="flyer_receive"]:checked');
+    const addrEl = document.getElementById('address_input');
+    if (selected && selected.value === '郵送') {
+      addrEl.classList.add('visible');
+    } else {
+      addrEl.classList.remove('visible');
+      document.getElementById('postal_address').value = '';
     }
   }
 
@@ -551,16 +512,22 @@
   // ----- 送信 -----
   async function submitForm() {
     clearErr();
-    const shopName  = document.getElementById('shop_name').value.trim();
-    const comment   = document.getElementById('comment').value.trim();
-    const carCount  = document.getElementById('car_count').value;
-    const flyerRaw  = document.getElementById('flyer_count').value;
-    const flyer     = flyerRaw.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0)).replace(/[^0-9]/g, '').trim();
+    const groupName  = document.getElementById('group_name').value.trim();
+    const comment    = document.getElementById('comment').value.trim();
+    const carCount   = document.getElementById('car_count').value;
+    const flyerRaw   = document.getElementById('flyer_count').value;
+    const flyer      = flyerRaw.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0)).replace(/[^0-9]/g, '').trim();
+    const flyerNum   = parseInt(flyer) || 0;
+    const receiveEl  = document.querySelector('input[name="flyer_receive"]:checked');
+    const receive    = receiveEl ? receiveEl.value : '';
+    const address    = document.getElementById('postal_address').value.trim();
 
-    if (!shopName)       { showErr('お店の名前を入力してください。'); return; }
-    if (!comment)        { showErr('お店からのコメントを入力してください。'); return; }
-    if (!imgFiles.length){ showErr('画像をアップロードしてください。'); return; }
-    if (!carCount)       { showErr('駐車場ご利用台数を選択してください。'); return; }
+    if (!groupName)       { showErr('団体名を入力してください。'); return; }
+    if (!comment)         { showErr('紹介文・コメントを入力してください。'); return; }
+    if (!imgFiles.length) { showErr('画像を1枚以上アップロードしてください。'); return; }
+    if (!carCount)        { showErr('駐車場ご利用台数を選択してください。'); return; }
+    if (flyerNum > 0 && !receive) { showErr('チラシの受取方法を選択してください。'); return; }
+    if (receive === '郵送' && !address) { showErr('郵送先の住所を入力してください。'); return; }
 
     const btn = document.getElementById('btn_submit');
     const sending = document.getElementById('sending_indicator');
@@ -570,25 +537,22 @@
     try {
       const images = [];
       for (const f of imgFiles) {
-        images.push({
-          name: f.name,
-          type: f.type,
-          data: await toBase64(f)
-        });
+        images.push({ name: f.name, type: f.type, data: await toBase64(f) });
       }
 
       const payload = {
-        shop_name:   shopName,
-        comment:     comment,
-        car_count:   carCount,
-        flyer_count: flyer || '不要',
-        img_count:   images.length,
-        images:      images,
-        submitted_at: new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })
+        group_name:      groupName,
+        comment:         comment,
+        car_count:       carCount,
+        flyer_count:     flyerNum > 0 ? flyer + '部' : '不要',
+        flyer_receive:   flyerNum > 0 ? receive : '―',
+        postal_address:  receive === '郵送' ? address : '―',
+        img_count:       images.length,
+        images:          images,
+        submitted_at:    new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })
       };
 
       if (GAS_ENDPOINT === 'YOUR_GAS_WEB_APP_URL_HERE') {
-        // まだURLが設定されていない場合はコンソールに出力してデモ動作
         console.log('【送信データ（デモ）】', payload);
         await new Promise(r => setTimeout(r, 800));
       } else {
